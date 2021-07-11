@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "nodemon server.js ",
-    "build": "cd client && npm install && npm run build"
+    "build": "cd client && yarn install && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
