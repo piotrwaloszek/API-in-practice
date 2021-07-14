@@ -32,10 +32,11 @@ router.route('/seats').post((req, res) => {
     }
 });
 
+
 router.route('/seats/:id').put((req, res) => {
     const seatData = db.seats.find(item => item.id == req.params.id);
     const {day, seat, client, email} = req.body;
-
+    
     if(day && seat && client && email){
         seatData.day = day;
         seatData.seat = seat;

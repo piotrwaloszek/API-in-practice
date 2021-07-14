@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Progress, Alert } from 'reactstrap';
 import { io } from "socket.io-client";
+
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
@@ -13,15 +14,19 @@ class SeatChooser extends React.Component {
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
+
     return (seats.some(item => (item.seat === seatId && item.day === chosenDay)));
   }
+
   prepareSeat = (seatId) => {
     const { chosenSeat, updateSeat } = this.props;
     const { isTaken } = this;
+
     if(seatId === chosenSeat) return <Button key={seatId} className="seats__seat" color="primary">{seatId}</Button>;
     else if(isTaken(seatId)) return <Button key={seatId} className="seats__seat" disabled color="secondary">{seatId}</Button>;
     else return <Button key={seatId} color="primary" className="seats__seat" outline onClick={(e) => updateSeat(e, seatId)}>{seatId}</Button>;
   }
+
   render() {
 
     const { prepareSeat } = this;
@@ -40,4 +45,5 @@ class SeatChooser extends React.Component {
     )
   };
 }
+
 export default SeatChooser;

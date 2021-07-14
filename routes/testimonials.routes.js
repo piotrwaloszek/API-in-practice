@@ -21,7 +21,7 @@ router.route('/testimonials/:id').get((req, res) => {
 router.route('/testimonials').post((req, res) => {
     const {author, text} = req.body;
     req.body.id = uuidv4();
-
+    
     if (author && text) {
         author;
         text;   
@@ -37,7 +37,7 @@ router.route('/testimonials').post((req, res) => {
 router.route('/testimonials/:id').put((req, res) => {
     const testimonial = db.testimonials.find(item => item.id == req.params.id);
     const {author, text} = req.body;
-
+    
     if(author && text){
         testimonial.author = author;
         testimonial.text = text;
