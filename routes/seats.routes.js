@@ -1,57 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const { v4: uuidv4 } = require('uuid');
+const SeatController = require('../controllers/seats.controller');
 
-router.route('/seats').get((req, res) => {
-    res.json(db.seats);
-});
+router.get('/seats', SeatController.getAll);
 
-router.route('/seats/:id').get((req, res) => {
-    const seatData = db.seats.find(item => item.id == req.params.id);
-    res.json(seatData);
-});
+router.get('/seats/:id', SeatController.getById);
 
-router.route('/seats').post((req, res) => {
-    const {day, seat, client, email} = req.body;
-    req.body.id = uuidv4();
+router.post('/seats', SeatController.newDocument);
 
-    const takenSeat = db.seats.some(item => (item.seat == seat && item.day == day));
-    if (takenSeat) {
-        res.json({ message: "The slot is already taken..." });
-    } else if (day && seat && client && email){
-        day;
-        seat; 
-        client;
-        email;
-        db.seats.push(req.body);
-        req.io.emit('seatsUpdated', (db.seats));
-        res.json({message: 'OK'});
-    } else {
-        res.json({message: 'Please put all informations'});
-    }
-});
+router.put('/seats/:id', SeatController.changeDocument);
 
-
-router.route('/seats/:id').put((req, res) => {
-    const seatData = db.seats.find(item => item.id == req.params.id);
-    const {day, seat, client, email} = req.body;
-    
-    if(day && seat && client && email){
-        seatData.day = day;
-        seatData.seat = seat;
-        seatData.client = client;
-        seatData.email = email;
-        res.json({message: 'OK'});
-    } else {
-        res.json({message: 'Please put all informations'});
-    }
-});
-
-router.route('/seats/:id').delete((req, res) => {
-    const seatToDel = db.seats.indexOf(db.seats.find(item => item.id == req.params.id));
-    db.seats.splice(seatToDel, 1);
-    res.json({message: 'OK'});
-});
+router.delete('/seats/:id', SeatController.deleteDocument);
 
 module.exports = router;

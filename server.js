@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -27,6 +28,14 @@ app.get('*', (req, res) => {
 app.use((req, res) => {
   res.status(404).send('404 not found...');
 })
+
+mongoose.connect('mongodb://localhost:27017/NewWaveFestivalDB', { useNewUrlParser: true });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', err => console.log('Error ' + err));
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
