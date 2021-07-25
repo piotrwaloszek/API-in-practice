@@ -29,7 +29,7 @@ app.use((req, res) => {
   res.status(404).send('404 not found...');
 })
 
-mongoose.connect('mongodb+srv://petermus:<password>@cluster0.zfp11.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://petermus:YM54zJMM3J6?z8jjQat&dSnaojsF@cluster0.zfp11.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
