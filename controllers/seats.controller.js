@@ -1,5 +1,6 @@
 const { setMaxListeners } = require('../models/seat.model');
 const Seat = require('../models/seat.model');
+const sanitize = require('mongo-sanitize');
 
 exports.getAll = async (req, res) => {
     try {
@@ -23,7 +24,10 @@ exports.getById = async (req, res) => {
 
 exports.newDocument = async (req, res) => {
     try {
-        const { day, seat, client, email } = req.body;
+        const day = sanitize(req.body.day);
+        const seat = sanitize(req.body.seat);
+        const client = sanitize(req.body.client);
+        const email = sanitize(req.body.email);
         const takenSeat = await Seat.findOne({day: day, seat: seat});
         if (takenSeat) {
             res.json({ message: "The slot is already taken..." });
